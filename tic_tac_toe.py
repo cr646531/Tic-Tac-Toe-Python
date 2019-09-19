@@ -15,7 +15,7 @@
 
 # Mark the board
 
-# Check for win -> Display winning board -> declare winner
+# Check for win -> declare winner
 
 # Ask if they want to play again
 
@@ -109,8 +109,35 @@ def mark_board(board, move, mark):
 	display_board(board)
 
 
+def win_check(board, mark):
+	row_check = [1, 2, 3]
+	column_check = [1, 4, 7]
 
-def play():
+	# row check
+	for index in row_check:
+		if board[index] == mark and board[index + 3] == mark and board[index + 6] == mark:
+			return True
+
+	# column check
+	for index in column_check:
+		if board[index] == mark and board[index + 1] == mark and board[index + 2] == mark:
+			return True
+
+	# diagonal check
+	if board[1] == mark and board[5] == mark and board[9] == mark:
+		return True
+	elif board[3] == mark and board[5] == mark and board[7] == mark:
+		return True
+	
+	# no winner
+	return False
+
+
+
+
+
+
+def play(replay):
 
 	# define board
 	sample_board = ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -132,23 +159,28 @@ def play():
 		#check to see if the board is full
 		if board_is_full(board):
 			print('\nGame over\n')
+			game_over = True
 			break
 
 		# record the move
 		move = player_move(board, current_player)
 
-		# mark the board and display it
+
+		# mark the board and check for winner
 		if current_player == 1:
 			mark_board(board, move, players['player_one'])
+			if win_check(board, players['player_one']):
+				print(f'\nPlayer {current_player} is the winner!\n')
+				game_over = True
+			else:
+				current_player = 2
 		else:
 			mark_board(board, move, players['player_two'])
-
-		# testing - to be removed
-		game_over = True
-
-
-
-
+			if win_check(board, players['player_two']):
+				print(f'\nPlayer {current_player} is the winner!\n')
+				game_over = True
+			else:
+				current_player = 1
 
 
 
@@ -156,7 +188,10 @@ def play():
 
 
 
-play()
+
+
+
+play(False)
 
 
 
