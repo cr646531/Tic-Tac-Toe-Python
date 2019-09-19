@@ -133,6 +133,17 @@ def win_check(board, mark):
 	# no winner
 	return False
 
+def prompt_replay():
+
+	while True:
+		answer = input('Would you like to play again? (y/n)').upper()
+		if answer == 'Y':
+			return True
+		elif answer == 'N':
+			return False
+
+
+
 
 
 
@@ -143,25 +154,21 @@ def play(replay):
 	# define board
 	sample_board = ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 	board = ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+	replay_game = replay
 	game_over = False
 
 	# ask if player 1 wants to be X or O and store it as a dict
 	players = player_input()
 
-	# display the rules
-	display_rules(sample_board)
+	if replay_game != True:
+		# display the rules
+		display_rules(sample_board)
 
 	# randomly determine who will go first
 	current_player = randomize()
 
 	# loop until the game is over
 	while game_over == False:
-
-		#check to see if the board is full
-		if board_is_full(board):
-			print('\nTie game!\n')
-			game_over = True
-			break
 
 		# record the move
 		valid_move = False
@@ -171,7 +178,6 @@ def play(replay):
 			if move != 0:
 				if move_is_valid(board, move) == True:
 					valid_move = True
-
 
 		# mark the board and check for winner
 		if current_player == 1:
@@ -188,6 +194,16 @@ def play(replay):
 				game_over = True
 			else:
 				current_player = 1
+
+		# check to see if the board is full
+		if board_is_full(board):
+			print('\nTie game!\n')
+			game_over = True
+			break
+
+	if prompt_replay() == True:
+		play(True)
+
 
 
 play(False)
