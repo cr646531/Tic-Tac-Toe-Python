@@ -28,6 +28,11 @@ def player_input():
 		else:
 			print('That is not a valid answer!\n')
 
+def randomize():
+	from random import randint
+
+	return randint(1, 2)
+
 
 
 
@@ -39,9 +44,9 @@ def play():
 	# ask if player 1 wants to be X or O and store it as a dict
 	players = player_input()
 
-	
+	# randomly determine who will go first
+	current_player = randomize()
 
 
 
-player_input()
 
