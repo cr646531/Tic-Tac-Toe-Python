@@ -34,6 +34,7 @@ def player_input():
 
 
 def randomize():
+
 	from random import randint
 
 	result = randint(1, 2)
@@ -73,27 +74,41 @@ def board_is_full(board):
 			return False
 	return True
 
-def player_move(player):
+
+
+def move_is_valid(board, move):
+
+	if board[move] == 'X' or board[move] == 'O':
+		print('\nThat space is already occupied\n')
+	else:
+		return True
+
+
+def player_move(board, player):
 
 	move = input(f'\nPlayer {player}, please choose a space (1 - 9)\n')
 
 	try:
 		move = int(move)
 		if move >= 1 and move <= 9:
-			return move
+			if move_is_valid(board, move) == True:
+				return move
+			else: 
+				player_move(board, player)
 		else:
 			print('Please choose a valid space\n')
 			player_move(player)
 	except:
 		print('Please choose a valid space\n')
-		player_move(player)
+		player_move(board, player)
+
 
 
 
 def play():
 
 	# define board
-	board = ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+	board = ['#', 'X', '2', '3', '4', '5', '6', '7', '8', '9']
 	game_over = False
 
 	# ask if player 1 wants to be X or O and store it as a dict
@@ -114,7 +129,7 @@ def play():
 			break
 
 		# record the move
-		move = player_move(current_player)
+		move = player_move(board, current_player)
 
 		# testing - to be removed
 		game_over = True
