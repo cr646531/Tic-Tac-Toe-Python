@@ -79,7 +79,7 @@ def board_is_full(board):
 def move_is_valid(board, move):
 
 	if board[move] == 'X' or board[move] == 'O':
-		print('\nThat space is already occupied\n')
+		print('That space is already occupied\n')
 	else:
 		return True
 
@@ -103,19 +103,25 @@ def player_move(board, player):
 		player_move(board, player)
 
 
+def mark_board(board, move, mark):
+	board[move] = mark
+	print('\n')
+	display_board(board)
+
 
 
 def play():
 
 	# define board
-	board = ['#', 'X', '2', '3', '4', '5', '6', '7', '8', '9']
+	sample_board = ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+	board = ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 	game_over = False
 
 	# ask if player 1 wants to be X or O and store it as a dict
 	players = player_input()
 
 	# display the rules
-	display_rules(board)
+	display_rules(sample_board)
 
 	# randomly determine who will go first
 	current_player = randomize()
@@ -130,6 +136,12 @@ def play():
 
 		# record the move
 		move = player_move(board, current_player)
+
+		# mark the board and display it
+		if current_player == 1:
+			mark_board(board, move, players['player_one'])
+		else:
+			mark_board(board, move, players['player_two'])
 
 		# testing - to be removed
 		game_over = True
