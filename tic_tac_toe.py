@@ -70,7 +70,7 @@ def board_is_full(board):
 	index = range(1, 10)
 
 	for n in index:
-		if board[n] != 'X' or board[n] != 'O':
+		if board[n] != 'X' and board[n] != 'O':
 			return False
 	return True
 
@@ -83,6 +83,8 @@ def move_is_valid(board, move):
 	else:
 		return True
 
+	return False
+
 
 def player_move(board, player):
 
@@ -91,16 +93,15 @@ def player_move(board, player):
 	try:
 		move = int(move)
 		if move >= 1 and move <= 9:
-			if move_is_valid(board, move) == True:
-				return move
-			else: 
-				player_move(board, player)
+			return move
 		else:
 			print('Please choose a valid space\n')
-			player_move(player)
+			return 0
 	except:
 		print('Please choose a valid space\n')
-		player_move(board, player)
+		return 0
+
+	return 0
 
 
 def mark_board(board, move, mark):
@@ -158,12 +159,18 @@ def play(replay):
 
 		#check to see if the board is full
 		if board_is_full(board):
-			print('\nGame over\n')
+			print('\nTie game!\n')
 			game_over = True
 			break
 
 		# record the move
-		move = player_move(board, current_player)
+		valid_move = False
+
+		while valid_move == False:
+			move = player_move(board, current_player)
+			if move != 0:
+				if move_is_valid(board, move) == True:
+					valid_move = True
 
 
 		# mark the board and check for winner
@@ -181,14 +188,6 @@ def play(replay):
 				game_over = True
 			else:
 				current_player = 1
-
-
-
-
-
-
-
-
 
 
 play(False)
