@@ -48,7 +48,7 @@ def display_board(board):
 		print(' {} | {} | {}'.format(board[index], board[index + 1], board[index + 2]))
 		index += 3
 		if index < len(board):
-			print('----------')
+			print('-----------')
 
 	print('\n')
 
@@ -71,11 +71,17 @@ def play():
 	# ask if player 1 wants to be X or O and store it as a dict
 	players = player_input()
 
+	# display the sample board
+	print('-'*20 + '\n')
+	print('Here is a sample board:\n')
+	display_board(board)
+	print("Each player will take turns choosing a space\nthat corresponds to the numbers above.\n\nLet's begin!\n")
+	print('-'*20 + '\n')
+
 	# randomly determine who will go first
 	current_player = randomize()
 
-	# display the board
-	display_board(board)
+
 
 play()
 
